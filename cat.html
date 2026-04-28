@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOMMY UPLOADS – Browse Categories</title>
+
+    <style>
+        /* ============================================
+           RESET & ROOT
+           ============================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-deep: #0a0a0f;
+            --bg-card: rgba(18, 18, 30, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border-hover: rgba(255, 255, 255, 0.22);
+            --glow-purple: rgba(138, 43, 226, 0.45);
+            --glow-blue: rgba(70, 130, 220, 0.4);
+            --glow-pink: rgba(220, 60, 120, 0.35);
+            --glow-teal: rgba(30, 200, 180, 0.35);
+            --glow-amber: rgba(240, 160, 40, 0.4);
+            --text-primary: #f0ece6;
+            --text-secondary: #b0aca5;
+            --card-radius: 18px;
+            --thumb-radius: 14px;
+            --transition-fast: 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+            --max-content-width: 1400px;
+            --hero-padding-top: clamp(120px, 22vh, 240px);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: none;
+            position: relative;
+            line-height: 1.5;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        @media (pointer: coarse) {
+            body {
+                cursor: auto;
+            }
+        }
+
+        /* ============================================
+           ANIMATED BACKGROUND BLOBS (GPU-friendly)
+           ============================================ */
+        .bg-blobs {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            will-change: transform;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        .bg-blob--1 {
+            width: 55vmax;
+            height: 55vmax;
+            background: radial-gradient(circle at 40% 40%, rgba(100, 40, 180, 0.7), transparent 70%);
+            top: -20%;
+            left: -15%;
+            animation-name: floatBlob1;
+            animation-duration: 22s;
+        }
+
+        .bg-blob--2 {
+            width: 48vmax;
+            height: 48vmax;
+            background: radial-gradient(circle at 50% 50%, rgba(30, 80, 200, 0.6), transparent 70%);
+            bottom: -25%;
+            right: -12%;
+            animation-name: floatBlob2;
+            animation-duration: 26s;
+            animation-delay: -8s;
+        }
+
+        .bg-blob--3 {
+            width: 40vmax;
+            height: 40vmax;
+            background: radial-gradient(circle at 60% 30%, rgba(180, 50, 100, 0.5), transparent 70%);
+            top: 40%;
+            left: 50%;
+            animation-name: floatBlob3;
+            animation-duration: 20s;
+            animation-delay: -4s;
+        }
+
+        .bg-blob--4 {
+            width: 35vmax;
+            height: 35vmax;
+            background: radial-gradient(circle at 30% 60%, rgba(20, 160, 140, 0.45), transparent 70%);
+            top: 10%;
+            right: 20%;
+            animation-name: floatBlob4;
+            animation-duration: 24s;
+            animation-delay: -12s;
+        }
+
+        @keyframes floatBlob1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(8vw, 6vh) scale(1.12); }
+            50% { transform: translate(-3vw, 12vh) scale(0.9); }
+            75% { transform: translate(-7vw, -4vh) scale(1.06); }
+        }
+        @keyframes floatBlob2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-6vw, -8vh) scale(1.1); }
+            50% { transform: translate(5vw, -5vh) scale(0.88); }
+            75% { transform: translate(8vw, 6vh) scale(1.08); }
+        }
+        @keyframes floatBlob3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(5vw, -7vh) scale(1.14); }
+            66% { transform: translate(-6vw, 4vh) scale(0.92); }
+        }
+        @keyframes floatBlob4 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-4vw, -5vh) scale(1.16); }
+        }
+
+        /* Subtle grain overlay */
+        .grain-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
+        /* ============================================
+           CUSTOM CURSOR (GPU-only transforms)
+           ============================================ */
+        .cursor-core {
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            width: 8px;
+            height: 8px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 14px 3px rgba(255, 255, 255, 0.7), 0 0 30px 6px rgba(180, 140, 255, 0.5);
+            will-change: transform, width, height;
+            transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cursor-ring {
+            position: fixed;
+            z-index: 9998;
+            pointer-events: none;
+            width: 38px;
+            height: 38px;
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(180, 150, 255, 0.2);
+            will-change: transform, width, height, border-color;
+            transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+        }
+
+        .cursor-core.is-hovering {
+            width: 14px;
+            height: 14px;
+            background: #ffe0f0;
+            box-shadow: 0 0 22px 6px rgba(255, 180, 220, 0.9), 0 0 40px 10px rgba(200, 120, 255, 0.6);
+        }
+
+        .cursor-ring.is-hovering {
+            width: 60px;
+            height: 60px;
+            border-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 20px rgba(220, 160, 255, 0.45);
+        }
+
+        @media (pointer: coarse) {
+            .cursor-core, .cursor-ring {
+                display: none !important;
+            }
+        }
+
+        /* ============================================
+           MAIN WRAPPER
+           ============================================ */
+        .main-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: var(--max-content-width);
+            margin: 0 auto;
+            padding: 0 clamp(16px, 4vw, 48px);
+            padding-bottom: 60px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ============================================
+           HERO SECTION — title ALWAYS VISIBLE
+           ============================================ */
+        .hero {
+            text-align: center;
+            padding-top: var(--hero-padding-top);
+            padding-bottom: clamp(32px, 6vh, 60px);
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-title {
+            font-size: clamp(2.4rem, 7vw, 5.5rem);
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #ffffff;
+            /* high-contrast solid color with glow */
+            text-shadow:
+                0 0 30px rgba(160, 120, 220, 0.8),
+                0 0 70px rgba(120, 80, 200, 0.5),
+                0 4px 10px rgba(0, 0, 0, 0.6);
+            margin-bottom: 10px;
+            line-height: 1.1;
+            animation: heroFadeIn 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-top: 14px;
+            opacity: 0.8;
+            animation: heroFadeIn 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            animation-delay: 0.25s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes heroFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================
+           CATEGORY GRID
+           ============================================ */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(14px, 2.5vw, 24px);
+            padding-top: 10px;
+            flex: 1;
+            align-content: start;
+        }
+
+        @media (min-width: 640px) {
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: clamp(16px, 3vw, 28px);
+            }
+        }
+        @media (min-width: 1024px) {
+            .category-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 22px;
+            }
+        }
+        @media (min-width: 1400px) {
+            .category-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 24px;
+            }
+        }
+
+        /* ============================================
+           CARD STYLES
+           ============================================ */
+        .category-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            cursor: none;
+            border-radius: var(--card-radius);
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+                0 0 40px -10px rgba(130, 80, 200, 0.15);
+            overflow: visible;
+            transition:
+                transform var(--transition-smooth),
+                box-shadow var(--transition-smooth),
+                border-color var(--transition-smooth);
+            will-change: transform;
+            /* entrance animation */
+            opacity: 0;
+            transform: translateY(40px);
+            animation: cardEntrance 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        }
+
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
+        .category-card:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes cardEntrance {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card glow accents (no tilt, just scale + shadow) */
+        .category-card--glow-purple { --card-glow: var(--glow-purple); }
+        .category-card--glow-blue   { --card-glow: var(--glow-blue); }
+        .category-card--glow-pink   { --card-glow: var(--glow-pink); }
+        .category-card--glow-teal   { --card-glow: var(--glow-teal); }
+        .category-card--glow-amber  { --card-glow: var(--glow-amber); }
+
+        .card-thumb {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: var(--thumb-radius) var(--thumb-radius) 0 0;
+            overflow: hidden;
+            z-index: 1;
+            background: #1a1a28;
+        }
+
+        .card-thumb img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+            will-change: transform;
+        }
+
+        .card-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                    rgba(10, 10, 18, 0.7) 0%,
+                    rgba(10, 10, 18, 0.2) 40%,
+                    rgba(10, 10, 18, 0.05) 70%,
+                    transparent 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .card-body {
+            position: relative;
+            z-index: 2;
+            padding: clamp(12px, 2vw, 18px) clamp(10px, 1.8vw, 16px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 0 var(--thumb-radius) var(--thumb-radius);
+            background: rgba(16, 16, 26, 0.5);
+        }
+
+        .card-title {
+            font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           HOVER (pure CSS, no JS mousemove for tilt)
+           ============================================ */
+        @media (hover: hover) {
+            .category-card:hover {
+                transform: scale(1.04);
+                border-color: var(--glass-border-hover);
+                box-shadow:
+                    0 14px 44px rgba(0, 0, 0, 0.55),
+                    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+                    0 0 60px -5px var(--card-glow, rgba(140, 90, 220, 0.35)),
+                    0 20px 50px -15px rgba(0, 0, 0, 0.5);
+            }
+            .category-card:hover .card-thumb img {
+                transform: scale(1.08);
+            }
+            .category-card:hover .card-title {
+                color: #ffffff;
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        /* ============================================
+           PRESS FEEDBACK (instant, no blocking)
+           ============================================ */
+        .category-card.is-pressing {
+            transform: scale(0.94) !important;
+            transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.7),
+                0 0 30px 0px var(--card-glow, rgba(180, 120, 240, 0.6)) !important;
+        }
+
+        /* ============================================
+           TOUCH DEVICES
+           ============================================ */
+        @media (pointer: coarse) {
+            .category-card {
+                cursor: pointer;
+            }
+            .category-card:active {
+                transform: scale(0.95);
+                transition: transform 0.1s ease;
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE FINE-TUNING
+           ============================================ */
+        @media (max-width: 380px) {
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .card-body {
+                padding: 10px 8px;
+            }
+            .card-title {
+                font-size: 0.78rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+    ANIMATED BACKGROUND BLOBS
+    ============================================ -->
+    <div class="bg-blobs" aria-hidden="true">
+        <div class="bg-blob bg-blob--1"></div>
+        <div class="bg-blob bg-blob--2"></div>
+        <div class="bg-blob bg-blob--3"></div>
+        <div class="bg-blob bg-blob--4"></div>
+    </div>
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <!-- CURSOR ELEMENTS -->
+    <div class="cursor-core" id="cursorCore" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+    <!-- ============================================
+    MAIN CONTENT
+    ============================================ -->
+    <main class="main-wrapper">
+        <header class="hero">
+            <h1 class="hero-title">MOMMY UPLOADS</h1>
+            <p class="hero-subtitle">Discover. Stream. Immerse.</p>
+        </header>
+
+        <nav class="category-grid" aria-label="Browse categories">
+            <!-- Card 1 -->
+            <a href="category1.html" class="category-card category-card--glow-purple"
+               aria-label="Trending Now – Browse trending content">
+                <div class="card-thumb">
+                    <img src="https://picsum.photos/seed/trending/400/400"
+                         alt="Trending Now thumbnail" loading="eager" width="400" height="400"
+                         onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg, #2a1a3e 0%, #1a1030 40%, #0d0d1a 100%)';">
+                </div>
+                <div class="card-body">
+                    <span class="card-title">CH!LD P0RN</span>
+                </div>
+            </a>
+
+            <!-- Card 2 -->
+            <a href="category2.html" class="category-card category-card--glow-blue"
+               aria-label="New Releases – Browse latest releases">
+                <div class="card-thumb">
+                    <img src="https://picsum.photos/seed/releases/400/400"
+                         alt="New Releases thumbnail" loading="eager" width="400" height="400"
+                         onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg, #0f1a30 0%, #0d1a2e 40%, #0a0d1a 100%)';">
+                </div>
+                <div class="card-body">
+                    <span class="card-title">R@PE P0RN</span>
+                </div>
+            </a>
+
+            <!-- Card 3 -->
+            <a href="category3.html" class="category-card category-card--glow-pink"
+               aria-label="Exclusive Originals – Browse original content">
+                <div class="card-thumb">
+                    <img src="https://picsum.photos/seed/originals/400/400"
+                         alt="Exclusive Originals thumbnail" loading="eager" width="400" height="400"
+                         onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg, #2e1028 0%, #1a0d1f 40%, #0d0a10 100%)';">
+                </div>
+                <div class="card-body">
+                    <span class="card-title">PUBLIC FLASHES</span>
+                </div>
+            </a>
+
+            <!-- Card 4 -->
+            <a href="category4.html" class="category-card category-card--glow-teal"
+               aria-label="Popular Shows – Browse popular shows">
+                <div class="card-thumb">
+                    <img src="https://picsum.photos/seed/popular/400/400"
+                         alt="Popular Shows thumbnail" loading="eager" width="400" height="400"
+                         onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg, #0a1f1f 0%, #0d1a1a 40%, #080f10 100%)';">
+                </div>
+                <div class="card-body">
+                    <span class="card-title">MOM SON</span>
+                </div>
+            </a>
+
+            <!-- Card 5 -->
+            <a href="category5.html" class="category-card category-card--glow-amber"
+               aria-label="Continue Watching – Resume your content">
+                <div class="card-thumb">
+                    <img src="https://picsum.photos/seed/watching/400/400"
+                         alt="Continue Watching thumbnail" loading="eager" width="400" height="400"
+                         onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg, #221a0c 0%, #1a150e 40%, #0f0c08 100%)';">
+                </div>
+                <div class="card-body">
+                    <span class="card-title">CASUALS</span>
+                </div>
+            </a>
+        </nav>
+    </main>
+
+    <!-- ============================================
+    JAVASCRIPT (instant navigation, light cursor)
+    ============================================ -->
+    <script>
+        (function() {
+            // ──────────────────────────────────────
+            // DOM ELEMENTS
+            // ──────────────────────────────────────
+            const cursorCore = document.getElementById('cursorCore');
+            const cursorRing = document.getElementById('cursorRing');
+            const allCards = document.querySelectorAll('.category-card');
+
+            const supportsHover = window.matchMedia('(hover: hover)').matches;
+            const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+            // ──────────────────────────────────────
+            // CUSTOM CURSOR (using only transform)
+            // ──────────────────────────────────────
+            if (!isTouchDevice && cursorCore && cursorRing) {
+                let mouseX = window.innerWidth / 2;
+                let mouseY = window.innerHeight / 2;
+                let ringX = mouseX;
+                let ringY = mouseY;
+                let rafId = null;
+
+                // Smooth ring follow
+                function updateRingPosition() {
+                    const lerp = 0.35;
+                    ringX += (mouseX - ringX) * lerp;
+                    ringY += (mouseY - ringY) * lerp;
+                    cursorRing.style.transform = `translate(${ringX - 19}px, ${ringY - 19}px)`;
+                    rafId = requestAnimationFrame(updateRingPosition);
+                }
+
+                rafId = requestAnimationFrame(updateRingPosition);
+
+                document.addEventListener('mousemove', function(e) {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    // Core follows instantly
+                    cursorCore.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+                }, { passive: true });
+
+                document.addEventListener('mouseleave', function() {
+                    cursorCore.style.opacity = '0';
+                    cursorRing.style.opacity = '0';
+                });
+                document.addEventListener('mouseenter', function() {
+                    cursorCore.style.opacity = '1';
+                    cursorRing.style.opacity = '1';
+                });
+
+                window.addEventListener('beforeunload', function() {
+                    if (rafId) cancelAnimationFrame(rafId);
+                });
+            } else {
+                if (cursorCore) cursorCore.style.display = 'none';
+                if (cursorRing) cursorRing.style.display = 'none';
+            }
+
+            // ──────────────────────────────────────
+            // CARD INTERACTIONS (no tilt, instant nav)
+            // ──────────────────────────────────────
+            allCards.forEach(function(card) {
+                // Cursor state on hover
+                if (supportsHover) {
+                    card.addEventListener('mouseenter', function() {
+                        if (cursorCore) cursorCore.classList.add('is-hovering');
+                        if (cursorRing) cursorRing.classList.add('is-hovering');
+                    });
+                    card.addEventListener('mouseleave', function() {
+                        if (cursorCore) cursorCore.classList.remove('is-hovering');
+                        if (cursorRing) cursorRing.classList.remove('is-hovering');
+                    });
+                }
+
+                // Instant click with press feedback
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = card.getAttribute('href');
+                    if (!href || card.dataset.navigating === 'true') return;
+
+                    card.dataset.navigating = 'true';
+                    card.classList.add('is-pressing');
+
+                    // Navigate immediately after a single frame – feels instant
+                    requestAnimationFrame(function() {
+                        window.location.href = href;
+                    });
+                });
+
+                // Keyboard accessibility
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        card.click();
+                    }
+                });
+            });
+
+            // ──────────────────────────────────────
+            // INITIAL CURSOR POSITION
+            // ──────────────────────────────────────
+            if (!isTouchDevice && cursorCore && cursorRing) {
+                cursorCore.style.transform = `translate(${window.innerWidth/2 - 4}px, ${window.innerHeight/2 - 4}px)`;
+                cursorRing.style.transform = `translate(${window.innerWidth/2 - 19}px, ${window.innerHeight/2 - 19}px)`;
+            }
+        })();
+    </script>
+</body>
+</html>
