@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>CH!|D P0RN — MOMMY UPLOADS</title>
+    <title>Development — MOMMY UPLOADS</title>
 
     <!-- Premium Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,16 +14,16 @@
         :root {
             --bg-deep: #06060c;
             --bg-card: rgba(16, 16, 28, 0.5);
-            --bg-card-hover: rgba(22, 22, 38, 0.68);
+            --bg-card-hover: rgba(22, 22, 38, 0.7);
             --border-subtle: rgba(255, 255, 255, 0.06);
-            --border-hover: rgba(255, 255, 255, 0.18);
+            --border-hover: rgba(255, 255, 255, 0.2);
             --text-primary: #f0f0f5;
             --text-secondary: #b0b0c0;
             --glow-purple: rgba(120, 60, 220, 0.35);
             --accent: #8b7cf6;
             --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.4);
-            --shadow-card-hover: 0 20px 50px rgba(0, 0, 0, 0.65), 0 4px 16px rgba(120, 100, 220, 0.3);
-            --radius-card: 17px;
+            --shadow-card-hover: 0 20px 50px rgba(0, 0, 0, 0.65), 0 4px 16px rgba(120, 100, 220, 0.4);
+            --radius-card: 18px;
             --transition-fast: 180ms cubic-bezier(0.22, 0.61, 0.36, 1);
             --transition-smooth: 350ms cubic-bezier(0.22, 0.61, 0.36, 1);
             --transition-bounce: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -163,7 +163,7 @@
            HEADER
            ────────────────────────────── */
         .header {
-            padding: 20px 0 30px;
+            padding: 20px 0 36px;
             text-align: left;
         }
 
@@ -198,94 +198,59 @@
             50% { background-position: 100% 50%; }
         }
 
-        /* ──────────────────────────────
-           FILTER BAR
-           ────────────────────────────── */
-        .filter-bar {
-            display: flex;
-            gap: 28px;
-            margin-bottom: 36px;
-            position: relative;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .filter-btn {
-            background: transparent;
-            border: none;
+        .header__subtitle {
+            font-size: 0.95rem;
+            font-weight: 400;
             color: var(--text-secondary);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 8px 4px;
-            letter-spacing: 0.03em;
-            transition: color var(--transition-fast), text-shadow var(--transition-fast);
-            position: relative;
-            z-index: 1;
-            font-family: inherit;
-        }
-
-        .filter-btn.active {
-            color: #ffffff;
-            text-shadow: 0 0 12px rgba(200, 180, 255, 0.8);
-        }
-
-        .filter-indicator {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 2.5px;
-            background: linear-gradient(90deg, #9b8cf0, #b6a8ff, #9b8cf0);
-            border-radius: 2px;
-            transition: left 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-            box-shadow: 0 0 14px rgba(150, 120, 240, 0.7);
-            width: 60px;
+            margin-top: 8px;
+            letter-spacing: 0.02em;
+            opacity: 0.8;
         }
 
         /* ──────────────────────────────
-           MEDIA GRID
+           FOLDER GRID
            ────────────────────────────── */
-        .media-grid {
+        .folder-grid {
             display: grid;
-            gap: 18px;
+            gap: 20px;
             perspective: 1200px;
         }
 
         /* Responsive columns */
         @media (max-width: 480px) {
-            .media-grid {
+            .folder-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+                gap: 12px;
             }
             .main-content {
                 padding: 14px 10px 40px;
             }
             .header {
-                padding: 10px 0 20px;
+                padding: 10px 0 24px;
             }
         }
         @media (min-width: 481px) and (max-width: 768px) {
-            .media-grid {
+            .folder-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 14px;
+                gap: 16px;
             }
         }
         @media (min-width: 769px) {
-            .media-grid {
+            .folder-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
         }
 
         /* ──────────────────────────────
-           MEDIA CARD (VIDEO & IMAGE)
+           FOLDER CARD
            ────────────────────────────── */
-        .media-card {
+        .folder-card {
             position: relative;
             cursor: pointer;
             border-radius: var(--radius-card);
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border: 1px solid var(--border-subtle);
             box-shadow: var(--shadow-card);
             overflow: hidden;
@@ -296,16 +261,14 @@
                 background var(--transition-smooth);
             will-change: transform;
             transform-origin: center center;
-            /* ✅ FIX 1: Fixed aspect ratio for all cards — perfectly aligned grid */
-            aspect-ratio: 4 / 5;
-            /* Entrance animation */
+            aspect-ratio: 16 / 9;
             opacity: 0;
             transform: translateY(30px);
             animation: cardEntrance 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
             animation-play-state: paused;
         }
 
-        .media-card.entered {
+        .folder-card.entered {
             animation-play-state: running;
         }
 
@@ -314,21 +277,20 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        .media-card:hover,
-        .media-card.hover-active {
+        .folder-card:hover,
+        .folder-card.hover-active {
             background: var(--bg-card-hover);
             border-color: var(--border-hover);
             box-shadow: var(--shadow-card-hover);
             z-index: 10;
         }
 
-        .media-card:active {
+        .folder-card:active {
             transform: scale(0.96) !important;
             transition: transform 100ms cubic-bezier(0.22, 0.61, 0.36, 1) !important;
         }
 
-        /* Thumbnail always fills card, cropped to cover */
-        .media-card__thumb {
+        .folder-card__thumb {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -338,78 +300,96 @@
             loading: lazy;
         }
 
-        .media-card:hover .media-card__thumb,
-        .media-card.hover-active .media-card__thumb {
-            transform: scale(1.1);
+        .folder-card:hover .folder-card__thumb,
+        .folder-card.hover-active .folder-card__thumb {
+            transform: scale(1.08);
         }
 
-        /* Overlay gradient preserved for depth */
-        .media-card__overlay {
+        /* Overlay gradient for depth */
+        .folder-card__overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(to top,
-                    rgba(6, 6, 16, 0.75) 0%,
-                    rgba(6, 6, 16, 0.3) 45%,
+                    rgba(6, 6, 16, 0.8) 0%,
+                    rgba(6, 6, 16, 0.25) 50%,
                     transparent 80%);
-            transition: opacity var(--transition-fast);
             pointer-events: none;
             z-index: 2;
+            transition: opacity var(--transition-fast);
         }
 
-        .media-card:hover .media-card__overlay,
-        .media-card.hover-active .media-card__overlay {
-            opacity: 0.7;
+        .folder-card:hover .folder-card__overlay,
+        .folder-card.hover-active .folder-card__overlay {
+            opacity: 0.9;
         }
 
-        /* Icon container */
-        .media-card__icon {
+        /* Folder icon (top left corner) */
+        .folder-card__folder-icon {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
+            top: 12px;
+            left: 12px;
             z-index: 3;
-            pointer-events: none;
-            width: 48px;
-            height: 48px;
+            width: 28px;
+            height: 28px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition:
-                opacity var(--transition-fast),
-                transform var(--transition-bounce),
-                background var(--transition-fast),
-                border-color var(--transition-fast),
-                box-shadow var(--transition-fast);
-            box-shadow: 0 0 0 0 rgba(160, 130, 240, 0);
+            transition: background var(--transition-fast), border-color var(--transition-fast);
+            pointer-events: none;
         }
 
-        .media-card:hover .media-card__icon,
-        .media-card.hover-active .media-card__icon {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-            background: rgba(255, 255, 255, 0.16);
-            border-color: rgba(255, 255, 255, 0.38);
-            box-shadow: 0 0 32px rgba(140, 110, 240, 0.4);
+        .folder-card:hover .folder-card__folder-icon,
+        .folder-card.hover-active .folder-card__folder-icon {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.35);
         }
 
-        .media-card__icon svg {
-            width: 22px;
-            height: 22px;
+        .folder-card__folder-icon svg {
+            width: 16px;
+            height: 16px;
             fill: #ffffff;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            opacity: 0.9;
+            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+        }
+
+        /* Title at bottom */
+        .folder-card__title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 4;
+            padding: 14px 12px 12px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 80%, transparent 100%);
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: transform var(--transition-fast), padding-bottom var(--transition-fast);
+            pointer-events: none;
+            line-height: 1.3;
+        }
+
+        .folder-card:hover .folder-card__title,
+        .folder-card.hover-active .folder-card__title {
+            transform: translateY(-2px);
+            padding-bottom: 14px;
         }
 
         /* Shine sweep */
-        .media-card__shine {
+        .folder-card__shine {
             position: absolute;
             inset: 0;
-            z-index: 4;
+            z-index: 5;
             pointer-events: none;
             opacity: 0;
             background: linear-gradient(105deg,
@@ -422,8 +402,8 @@
             transform: translateX(-100%);
         }
 
-        .media-card:hover .media-card__shine,
-        .media-card.hover-active .media-card__shine {
+        .folder-card:hover .folder-card__shine,
+        .folder-card.hover-active .folder-card__shine {
             opacity: 1;
             animation: shineSweep 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
         }
@@ -452,7 +432,7 @@
         }
 
         /* ──────────────────────────────
-           LOADING OVERLAY (for videos)
+           LOADING OVERLAY
            ────────────────────────────── */
         .loading-overlay {
             position: fixed;
@@ -503,99 +483,6 @@
         }
 
         /* ──────────────────────────────
-           FULLSCREEN IMAGE VIEWER
-           ────────────────────────────── */
-        .image-viewer {
-            position: fixed;
-            inset: 0;
-            z-index: 999;
-            background: rgba(4, 4, 12, 0.88);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.25s ease;
-        }
-
-        .image-viewer.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .image-viewer__content {
-            position: relative;
-            max-width: 92vw;
-            max-height: 92vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .image-viewer__img {
-            max-width: 90vw;
-            max-height: 90vh;
-            object-fit: contain;
-            display: block;
-            border-radius: 6px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(120, 100, 220, 0.25);
-            transition: transform 0.2s ease, opacity 0.2s ease;
-            will-change: transform;
-            user-select: none;
-            -webkit-user-drag: none;
-        }
-
-        .image-viewer__close {
-            position: fixed;
-            top: 22px;
-            right: 28px;
-            width: 44px;
-            height: 44px;
-            background: rgba(20, 20, 30, 0.65);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 50%;
-            color: #fff;
-            font-size: 24px;
-            line-height: 1;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1001;
-            transition: background 0.2s, border-color 0.2s, transform 0.2s;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.5);
-        }
-
-        .image-viewer__close:hover {
-            background: rgba(40, 40, 55, 0.75);
-            border-color: rgba(255,255,255,0.4);
-            transform: scale(1.06);
-        }
-
-        .image-viewer__close svg {
-            width: 20px;
-            height: 20px;
-            stroke: white;
-            stroke-width: 2.2;
-        }
-
-        .zoom-hint {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(255,255,255,0.6);
-            font-size: 0.8rem;
-            letter-spacing: 0.04em;
-            pointer-events: none;
-            z-index: 1001;
-        }
-
-        /* ──────────────────────────────
            SCROLLBAR
            ────────────────────────────── */
         ::-webkit-scrollbar { width: 6px; }
@@ -617,167 +504,87 @@
     </div>
     <div class="bg-grain" aria-hidden="true"></div>
 
-    <!-- Loading overlay for videos -->
+    <!-- Loading overlay -->
     <div class="loading-overlay" id="loadingOverlay" aria-hidden="true">
         <div class="loading-spinner"></div>
-        <p class="loading-text">Opening video…</p>
-    </div>
-
-    <!-- Fullscreen image viewer -->
-    <div class="image-viewer" id="imageViewer" role="dialog" aria-modal="true" aria-label="Fullscreen image viewer">
-        <button class="image-viewer__close" id="closeViewerBtn" aria-label="Close viewer">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-linecap="round"/></svg>
-        </button>
-        <div class="image-viewer__content" id="viewerContent">
-            <img id="viewerImage" class="image-viewer__img" src="" alt="Full resolution media" draggable="false" />
-        </div>
-        <div class="zoom-hint">🖱️ Scroll to zoom • Drag to move</div>
+        <p class="loading-text">Opening folder…</p>
     </div>
 
     <main class="main-content">
         <header class="header">
             <p class="header__brand">MOMMY UPLOADS</p>
-            <h1 class="header__title">CH!!D P0RN</h1>
+            <h1 class="header__title">Development</h1>
+            <p class="header__subtitle">Course Modules</p>
         </header>
 
-        <!-- Filter buttons -->
-        <div class="filter-bar" id="filterBar">
-            <button class="filter-btn active" data-filter="video">Videos</button>
-            <button class="filter-btn" data-filter="image">Images</button>
-            <div class="filter-indicator" id="filterIndicator"></div>
-        </div>
-
-        <!-- Media grid -->
-        <div class="media-grid" id="mediaGrid"></div>
+        <!-- Folder grid (replaces old media grid) -->
+        <div class="folder-grid" id="folderGrid"></div>
     </main>
 
     <script>
         (function() {
-            // ✅ FIX 2: All image thumbnails and fullscreen URLs are now identical.
-            // For images, `thumbnail` and `url` are the same file, preventing any mismatch.
-            const mediaItems = [
-                { type: 'video', thumbnail: 'https://i.ibb.co/4RtNCLyC/Screenshot-20260429-124121.jpg', url: 'https://mega.nz/file/StREwQaA#SR9VvRxHRt5bqJ_dKgSHMwfY9QQGKWRqAT445yDptHs' },
-                { type: 'image', thumbnail: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/yWhT/oMRCf2XFa/@SparkGX - 100GB/TG @SparkGX (4)/TG @SparkGX (2)/TG @SparkGX (3)/TG @SparkGX (1).jpg?mt=1761719696000', url: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/yWhT/oMRCf2XFa/@SparkGX - 100GB/TG @SparkGX (4)/TG @SparkGX (2)/TG @SparkGX (3)/TG @SparkGX (1).jpg?mt=1761719696000' },
-                { type: 'video', thumbnail: 'https://i.ibb.co/Z6zzhHg2/Screenshot-20260429-124805.jpg', url: 'https://mega.nz/file/z45GnJqZ#_BFg9xoacF92BtVp28ek2t7OcrwearhW5FmgXF7Ddiw' },
-                { type: 'image', thumbnail: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/yWhT/oMRCf2XFa/@SparkGX - 100GB/TG @SparkGX (4)/TG @SparkGX (5).png?mt=1761715493000', url: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/yWhT/oMRCf2XFa/@SparkGX - 100GB/TG @SparkGX (4)/TG @SparkGX (5).png?mt=1761715493000' },
-                { type: 'image', thumbnail: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/yWhT/oMRCf2XFa/@SparkGX - 100GB/TG @SparkGX (4)/TG @SparkGX (13).jpg?mt=1761706043000', url: 'https://thumb.cloud.mail.ru/weblink/thumb/xw1/yWhT/oMRCf2XFa/@SparkGX - 100GB/TG @SparkGX (4)/TG @SparkGX (13).jpg?mt=1761706043000' },
-                { type: 'video', thumbnail: 'https://i.ibb.co/jPBq31wx/Screenshot-20260429-131503.jpg', url: 'https://mega.nz/file/Dh4lRapT#LbBhOg87yNTzuINud7xZYOqgiuC_KmZkV-F5Kh1sqqs' },
-                { type: 'image', thumbnail: 'https://i.ibb.co/fzppMVRv/Screenshot-20260429-143400.jpg', url: 'https://i.ibb.co/fzppMVRv/Screenshot-20260429-143400.jpg' },
-                { type: 'video', thumbnail: 'https://i.ibb.co/7tF1kD2c/Screenshot-20260429-142244.jpg', url: 'https://mega.nz/file/nl5hFKyJ#USKi7e10OYWxCbBLgBbX2w572D4ETUNymla9uwSaTYU' },
-                { type: 'image', thumbnail: 'https://i.ibb.co/7t5g7pY9/Screenshot-20260429-143250.jpg', url: 'https://i.ibb.co/7t5g7pY9/Screenshot-20260429-143250.jpg' },
-                { type: 'video', thumbnail: 'https://i.ibb.co/Lzqry3Y9/Screenshot-20260429-142824.jpg', url: 'https://mega.nz/file/OhQBWRpb#YXn9Ayddmzp__3HR4jxWRuQYkLHqXLKE8k12QCUIgBk' }
+            // ────────────────────────────────────
+            // FOLDER DATA STRUCTURE
+            // ────────────────────────────────────
+            const folders = [
+                { name: 'Module 1: CP #1', thumbnail: 'https://i.ibb.co/fzppMVRv/Screenshot-20260429-143400.jpg', url: 'https://mega.nz/folder/q9IiUZYb#_8Rtio4bHn1c-w3bWp12xQ' },
+                { name: 'Module 2: UPLOADING SOON', thumbnail: 'https://picsum.photos/seed/folder2/600/338', url: 'https://example.com/module2' },
+                { name: 'Module 3: UPLOADING SOON', thumbnail: 'https://picsum.photos/seed/folder3/600/338', url: 'https://example.com/module3' },
+                { name: 'Module 4: UPLOADING SOON', thumbnail: 'https://picsum.photos/seed/folder4/600/338', url: 'https://example.com/module4' },
+                { name: 'Module 5: UPLOADING SOON', thumbnail: 'https://picsum.photos/seed/folder5/600/338', url: 'https://example.com/module5' },
+                { name: 'Module 6: UPLOADING SOON', thumbnail: 'https://picsum.photos/seed/folder10/600/338', url: 'https://example.com/module10' }
             ];
 
-            let currentFilter = 'video';
-            const mediaGrid = document.getElementById('mediaGrid');
+            const folderGrid = document.getElementById('folderGrid');
             const loadingOverlay = document.getElementById('loadingOverlay');
-            const imageViewer = document.getElementById('imageViewer');
-            const viewerImage = document.getElementById('viewerImage');
-            const closeViewerBtn = document.getElementById('closeViewerBtn');
-            const filterIndicator = document.getElementById('filterIndicator');
-            const filterButtons = document.querySelectorAll('.filter-btn');
 
             // ──────────────────────────────
-            // FILTER LOGIC
+            // BUILD FOLDER CARDS
             // ──────────────────────────────
-            function setFilter(filterType) {
-                currentFilter = filterType;
-                filterButtons.forEach(btn => {
-                    const isActive = btn.dataset.filter === filterType;
-                    btn.classList.toggle('active', isActive);
-                });
-                const activeBtn = document.querySelector(`.filter-btn[data-filter="${filterType}"]`);
-                if (activeBtn) {
-                    const rect = activeBtn.getBoundingClientRect();
-                    const parentRect = activeBtn.parentNode.getBoundingClientRect();
-                    filterIndicator.style.left = (rect.left - parentRect.left) + 'px';
-                    filterIndicator.style.width = rect.width + 'px';
-                }
-                renderGrid();
-            }
-
-            filterButtons.forEach(btn => {
-                btn.addEventListener('click', () => setFilter(btn.dataset.filter));
-            });
-
-            // Initialize indicator position
-            window.addEventListener('load', () => {
-                const activeBtn = document.querySelector('.filter-btn.active');
-                if (activeBtn) {
-                    const rect = activeBtn.getBoundingClientRect();
-                    const parentRect = activeBtn.parentNode.getBoundingClientRect();
-                    filterIndicator.style.left = (rect.left - parentRect.left) + 'px';
-                    filterIndicator.style.width = rect.width + 'px';
-                }
-            });
-            window.addEventListener('resize', () => {
-                const activeBtn = document.querySelector('.filter-btn.active');
-                if (activeBtn) {
-                    const rect = activeBtn.getBoundingClientRect();
-                    const parentRect = activeBtn.parentNode.getBoundingClientRect();
-                    filterIndicator.style.left = (rect.left - parentRect.left) + 'px';
-                    filterIndicator.style.width = rect.width + 'px';
-                }
-            });
-
-            // ──────────────────────────────
-            // RENDER GRID
-            // ──────────────────────────────
-            function renderGrid() {
-                const filtered = mediaItems.filter(m => m.type === currentFilter);
-                mediaGrid.innerHTML = '';
-
-                filtered.forEach((item, index) => {
-                    const card = buildMediaCard(item, index);
-                    mediaGrid.appendChild(card);
-                });
-
-                requestAnimationFrame(() => {
-                    const cards = mediaGrid.querySelectorAll('.media-card');
-                    cards.forEach((card, i) => {
-                        card.style.animationDelay = `${i * 45}ms`;
-                        card.classList.add('entered');
-                    });
-                });
-            }
-
-            function buildMediaCard(item, index) {
+            function buildFolderCard(folder, index) {
                 const card = document.createElement('div');
-                card.className = 'media-card';
+                card.className = 'folder-card';
                 card.setAttribute('role', 'button');
                 card.setAttribute('tabindex', '0');
-                card.setAttribute('aria-label', `Open ${item.type}`);
-                card.dataset.type = item.type;
-                card.dataset.url = item.url;
-                // For images, thumbnail and fullscreen are identical (FIX 2)
-                if (item.type === 'image') {
-                    card.dataset.full = item.url; // same as thumbnail
-                }
+                card.setAttribute('aria-label', `Open folder: ${folder.name}`);
+                card.dataset.url = folder.url;
 
+                // Inner HTML structure
                 card.innerHTML = `
-                    <img class="media-card__thumb" src="${item.thumbnail}" alt="" loading="lazy" draggable="false">
-                    <div class="media-card__overlay"></div>
-                    <div class="media-card__icon">
-                        ${item.type === 'video' 
-                            ? `<svg viewBox="0 0 24 28"><path d="M1.5 1.2C1.5 0.2 2.6 -0.4 3.5 0.2L22.5 12.5C23.3 13 23.3 14.2 22.5 14.7L3.5 27C2.6 27.6 1.5 27 1.5 26L1.5 1.2Z"/></svg>`
-                            : `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>`
-                        }
+                    <img class="folder-card__thumb" src="${folder.thumbnail}" alt="${folder.name}" loading="lazy" draggable="false">
+                    <div class="folder-card__overlay"></div>
+                    <div class="folder-card__folder-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6.465a1 1 0 01-.832-.445L10.535 5H5a2 2 0 00-2 2z" fill="white" fill-opacity="0.9"/>
+                        </svg>
                     </div>
-                    <div class="media-card__shine"></div>
+                    <div class="folder-card__title">${folder.name}</div>
+                    <div class="folder-card__shine"></div>
                 `;
 
+                // Click event → loading overlay → redirect
                 card.addEventListener('click', function(e) {
-                    handleCardClick(e, card, item);
+                    if (card.dataset.clicked === 'true') return;
+                    card.dataset.clicked = 'true';
+                    createRipple(card, e);
+                    loadingOverlay.classList.add('active');
+                    setTimeout(() => {
+                        window.location.href = folder.url;
+                    }, 120);
+                    setTimeout(() => {
+                        card.dataset.clicked = 'false';
+                    }, 1000);
                 });
 
+                // Keyboard accessibility
                 card.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        handleCardClick(e, card, item);
+                        card.click();
                     }
                 });
 
-                // Magnetic hover
+                // Magnetic hover + tilt (desktop only)
                 card.addEventListener('mousemove', function(e) {
                     if (window.innerWidth <= 768) return;
                     applyTilt(card, e);
@@ -785,7 +592,7 @@
                 card.addEventListener('mouseenter', function(e) {
                     if (window.innerWidth <= 768) return;
                     card.classList.add('hover-active');
-                    const shine = card.querySelector('.media-card__shine');
+                    const shine = card.querySelector('.folder-card__shine');
                     if (shine) {
                         shine.style.animation = 'none';
                         shine.offsetHeight;
@@ -800,6 +607,9 @@
                 return card;
             }
 
+            // ──────────────────────────────
+            // TILT & MAGNETIC EFFECT
+            // ──────────────────────────────
             function applyTilt(card, e) {
                 const rect = card.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
@@ -808,17 +618,17 @@
                 const ny = (e.clientY - centerY) / (rect.height / 2);
                 const cnx = Math.max(-1, Math.min(1, nx));
                 const cny = Math.max(-1, Math.min(1, ny));
-                const maxTilt = 5;
-                const magneticPull = 4;
+                const maxTilt = 6;
+                const magneticPull = 5;
                 const rotateY = cnx * maxTilt;
                 const rotateX = -cny * maxTilt;
                 const translateX = cnx * magneticPull;
                 const translateY = cny * magneticPull;
                 const scale = 1.04;
                 card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateX(${translateX}px) translateY(${translateY}px) scale(${scale})`;
-                const shadowX = -cnx * 16;
-                const shadowY = -cny * 16;
-                card.style.boxShadow = `0 20px 45px rgba(0,0,0,0.55), ${shadowX}px ${shadowY}px 28px rgba(100,80,220,0.25)`;
+                const shadowX = -cnx * 18;
+                const shadowY = -cny * 18;
+                card.style.boxShadow = `0 20px 50px rgba(0,0,0,0.6), ${shadowX}px ${shadowY}px 28px rgba(100,80,220,0.3)`;
             }
 
             function resetTilt(card) {
@@ -831,28 +641,8 @@
             }
 
             // ──────────────────────────────
-            // CLICK HANDLER
+            // RIPPLE EFFECT
             // ──────────────────────────────
-            function handleCardClick(e, card, item) {
-                if (card.dataset.clicked === 'true') return;
-                card.dataset.clicked = 'true';
-                createRipple(card, e);
-
-                if (item.type === 'video') {
-                    loadingOverlay.classList.add('active');
-                    setTimeout(() => {
-                        window.location.href = item.url;
-                    }, 120);
-                } else {
-                    // ✅ Open fullscreen with the identical image (item.url = thumbnail)
-                    openImageViewer(item.url);
-                }
-
-                setTimeout(() => {
-                    card.dataset.clicked = 'false';
-                }, 800);
-            }
-
             function createRipple(card, e) {
                 const ripple = document.createElement('span');
                 ripple.className = 'ripple';
@@ -869,136 +659,25 @@
             }
 
             // ──────────────────────────────
-            // FULLSCREEN IMAGE VIEWER
+            // RENDER ALL FOLDERS
             // ──────────────────────────────
-            let viewerState = {
-                scale: 1,
-                translateX: 0,
-                translateY: 0,
-                dragging: false,
-                startX: 0,
-                startY: 0,
-                lastTranslateX: 0,
-                lastTranslateY: 0
-            };
+            folders.forEach((folder, index) => {
+                const card = buildFolderCard(folder, index);
+                folderGrid.appendChild(card);
+            });
 
-            function openImageViewer(fullUrl) {
-                viewerImage.src = fullUrl;
-                viewerImage.style.transform = 'scale(0.85)';
-                viewerImage.style.opacity = '0';
-                imageViewer.classList.add('active');
-
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        viewerImage.style.transition = 'transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.35s ease';
-                        viewerImage.style.transform = 'scale(1)';
-                        viewerImage.style.opacity = '1';
-                    });
+            // Staggered entrance animation
+            requestAnimationFrame(() => {
+                const cards = folderGrid.querySelectorAll('.folder-card');
+                cards.forEach((card, i) => {
+                    card.style.animationDelay = `${i * 50}ms`;
+                    card.classList.add('entered');
                 });
-
-                viewerState.scale = 1;
-                viewerState.translateX = 0;
-                viewerState.translateY = 0;
-                applyViewerTransform();
-            }
-
-            function closeImageViewer() {
-                viewerImage.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
-                viewerImage.style.transform = 'scale(0.9)';
-                viewerImage.style.opacity = '0';
-                setTimeout(() => {
-                    imageViewer.classList.remove('active');
-                    viewerImage.src = ''; // free memory
-                }, 200);
-            }
-
-            function applyViewerTransform() {
-                viewerImage.style.transform = `translate(${viewerState.translateX}px, ${viewerState.translateY}px) scale(${viewerState.scale})`;
-            }
-
-            closeViewerBtn.addEventListener('click', closeImageViewer);
-            imageViewer.addEventListener('click', function(e) {
-                if (e.target === imageViewer) closeImageViewer();
-            });
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && imageViewer.classList.contains('active')) {
-                    closeImageViewer();
-                }
-            });
-
-            viewerImage.addEventListener('wheel', function(e) {
-                if (!imageViewer.classList.contains('active')) return;
-                e.preventDefault();
-                const delta = e.deltaY > 0 ? -0.1 : 0.1;
-                let newScale = viewerState.scale + delta;
-                newScale = Math.min(Math.max(newScale, 1), 3.5);
-                viewerState.scale = newScale;
-                if (newScale <= 1.01) {
-                    viewerState.translateX = 0;
-                    viewerState.translateY = 0;
-                }
-                applyViewerTransform();
-            }, { passive: false });
-
-            viewerImage.addEventListener('mousedown', function(e) {
-                if (!imageViewer.classList.contains('active') || viewerState.scale <= 1.01) return;
-                e.preventDefault();
-                viewerState.dragging = true;
-                viewerState.startX = e.clientX;
-                viewerState.startY = e.clientY;
-                viewerState.lastTranslateX = viewerState.translateX;
-                viewerState.lastTranslateY = viewerState.translateY;
-                viewerImage.style.cursor = 'grabbing';
-            });
-
-            window.addEventListener('mousemove', function(e) {
-                if (!viewerState.dragging) return;
-                const dx = e.clientX - viewerState.startX;
-                const dy = e.clientY - viewerState.startY;
-                viewerState.translateX = viewerState.lastTranslateX + dx;
-                viewerState.translateY = viewerState.lastTranslateY + dy;
-                applyViewerTransform();
-            });
-
-            window.addEventListener('mouseup', function() {
-                if (viewerState.dragging) {
-                    viewerState.dragging = false;
-                    viewerImage.style.cursor = '';
-                }
-            });
-
-            // Touch support
-            viewerImage.addEventListener('touchstart', function(e) {
-                if (!imageViewer.classList.contains('active') || viewerState.scale <= 1.01) return;
-                if (e.touches.length === 1) {
-                    viewerState.dragging = true;
-                    viewerState.startX = e.touches[0].clientX;
-                    viewerState.startY = e.touches[0].clientY;
-                    viewerState.lastTranslateX = viewerState.translateX;
-                    viewerState.lastTranslateY = viewerState.translateY;
-                }
-            }, { passive: false });
-
-            window.addEventListener('touchmove', function(e) {
-                if (!viewerState.dragging) return;
-                if (e.touches.length === 1) {
-                    const dx = e.touches[0].clientX - viewerState.startX;
-                    const dy = e.touches[0].clientY - viewerState.startY;
-                    viewerState.translateX = viewerState.lastTranslateX + dx;
-                    viewerState.translateY = viewerState.lastTranslateY + dy;
-                    applyViewerTransform();
-                }
-            });
-
-            window.addEventListener('touchend', function() {
-                viewerState.dragging = false;
             });
 
             // ──────────────────────────────
-            // INITIAL RENDER + PROTECTION
+            // BASIC PROTECTION
             // ──────────────────────────────
-            setFilter('video');
-
             document.addEventListener('contextmenu', e => e.preventDefault());
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'F12' || 
@@ -1009,7 +688,7 @@
                 }
             });
 
-            console.log('%c🎬 MOMMY UPLOADS — Fixed Grid & Viewer %cReady',
+            console.log('%c📂 MOMMY UPLOADS — Folder System %cActive',
                 'font-size:1.2em; font-weight:700; color:#c4b8f0;', 'color:#b0b0c0;');
         })();
     </script>
